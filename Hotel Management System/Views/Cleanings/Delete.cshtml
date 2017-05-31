@@ -1,0 +1,64 @@
+﻿@model Hotel_Management_System.Models.Cleaning
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Delete</title>
+</head>
+<body>
+    <h3>Are you sure you want to delete this?</h3>
+    <div>
+        <h4>Cleaning</h4>
+        <hr />
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.Room_ID)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.Room_ID)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.Task_Time)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.Task_Time)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.Task_Date)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.Task_Date)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.Staff_ID)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.Staff_ID)
+            </dd>
+    
+        </dl>
+    
+        @using (Html.BeginForm()) {
+            @Html.AntiForgeryToken()
+    
+            <div class="form-actions no-color">
+                <input type="submit" value="Delete" class="btn btn-default" /> |
+                @Html.ActionLink("Back to List", "Index")
+            </div>
+        }
+    </div>
+</body>
+</html>
