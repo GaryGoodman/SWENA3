@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="cbe70e4f40304920a9908fc77a247672" Name="Diagram1">
+        <EntityTypeShape EntityType="Model.Booking" Width="1.5" PointX="3" PointY="4.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.Cleaning" Width="1.5" PointX="10.25" PointY="1.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.Duty" Width="1.5" PointX="5.75" PointY="1.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.Guest" Width="1.5" PointX="0.75" PointY="6" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.GuestDetail" Width="1.5" PointX="3" PointY="8.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.Payment" Width="1.5" PointX="3" PointY="11.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.PaymentInvoice" Width="1.5" PointX="6" PointY="6.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.Room" Width="1.5" PointX="0.75" PointY="2.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.Staff" Width="1.5" PointX="8" PointY="1" IsExpanded="true" />
+        <AssociationConnector Association="Model.FK_dbo_Booking_dbo_Guest_guest_id" ManuallyRouted="false" />
+        <AssociationConnector Association="Model.FK_dbo_Booking_dbo_Room_room_id" ManuallyRouted="false" />
+        <AssociationConnector Association="Model.FK_dbo_Cleaning_dbo_Room_room_id" ManuallyRouted="false" />
+        <AssociationConnector Association="Model.FK_dbo_Cleaning_dbo_Staff_staff_id" ManuallyRouted="false" />
+        <AssociationConnector Association="Model.FK_dbo_Staff_dbo_Duty_duty_id" ManuallyRouted="false" />
+        <AssociationConnector Association="Model.FK_dbo_GuestDetail_dbo_Guest_guest_id" ManuallyRouted="false" />
+        <AssociationConnector Association="Model.FK_dbo_Payment_dbo_Guest_guest_id" ManuallyRouted="false" />
+        <AssociationConnector Association="Model.FK_dbo_PaymentInvoice_dbo_Guest_guest_id" ManuallyRouted="false" />
+        <AssociationConnector Association="Model.FK_dbo_PaymentInvoice_dbo_Room_room_id" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

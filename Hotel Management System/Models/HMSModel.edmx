@@ -1,0 +1,721 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Booking">
+          <Key>
+            <PropertyRef Name="book_id" />
+          </Key>
+          <Property Name="book_id" Type="nvarchar" MaxLength="10" Nullable="false" />
+          <Property Name="room_id" Type="nvarchar" MaxLength="10" />
+          <Property Name="people_pax" Type="nvarchar" MaxLength="25" />
+          <Property Name="start_date" Type="nvarchar" MaxLength="50" />
+          <Property Name="end_date" Type="nvarchar" MaxLength="50" />
+          <Property Name="guest_id" Type="nvarchar" MaxLength="10" />
+        </EntityType>
+        <EntityType Name="Cleaning">
+          <Key>
+            <PropertyRef Name="task_id" />
+          </Key>
+          <Property Name="task_id" Type="nvarchar" MaxLength="10" Nullable="false" />
+          <Property Name="room_id" Type="nvarchar" MaxLength="10" />
+          <Property Name="task_time" Type="nvarchar" MaxLength="50" />
+          <Property Name="task_date" Type="nvarchar" MaxLength="50" />
+          <Property Name="staff_id" Type="nvarchar" MaxLength="10" />
+        </EntityType>
+        <EntityType Name="Duty">
+          <Key>
+            <PropertyRef Name="duty_id" />
+          </Key>
+          <Property Name="duty_id" Type="nvarchar" MaxLength="10" Nullable="false" />
+          <Property Name="duty_name" Type="nvarchar" MaxLength="80" />
+        </EntityType>
+        <EntityType Name="Guest">
+          <Key>
+            <PropertyRef Name="guest_id" />
+          </Key>
+          <Property Name="guest_id" Type="nvarchar" MaxLength="10" Nullable="false" />
+          <Property Name="first_name" Type="nvarchar" MaxLength="80" />
+          <Property Name="last_name" Type="nvarchar" MaxLength="80" />
+          <Property Name="phone_no" Type="nvarchar" MaxLength="50" />
+          <Property Name="email" Type="nvarchar" MaxLength="80" />
+          <Property Name="block_no" Type="nvarchar" MaxLength="50" />
+          <Property Name="postal_code" Type="nvarchar" MaxLength="50" />
+          <Property Name="country" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="GuestDetail">
+          <Key>
+            <PropertyRef Name="guest_id" />
+          </Key>
+          <Property Name="guest_id" Type="nvarchar" MaxLength="10" Nullable="false" />
+          <Property Name="checkIn_time" Type="nvarchar" MaxLength="50" />
+          <Property Name="checkIn_date" Type="nvarchar" MaxLength="50" />
+          <Property Name="checkOut_time" Type="nvarchar" MaxLength="50" />
+          <Property Name="checkOut_date" Type="nvarchar" MaxLength="50" />
+          <Property Name="remarks" Type="nvarchar" MaxLength="500" />
+        </EntityType>
+        <EntityType Name="Payment">
+          <Key>
+            <PropertyRef Name="payment_id" />
+          </Key>
+          <Property Name="payment_id" Type="nvarchar" MaxLength="10" Nullable="false" />
+          <Property Name="guest_id" Type="nvarchar" MaxLength="10" />
+          <Property Name="card_no" Type="nvarchar" MaxLength="50" />
+          <Property Name="holder_name" Type="nvarchar" MaxLength="50" />
+          <Property Name="card_expiry" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="PaymentInvoice">
+          <Key>
+            <PropertyRef Name="invoice_id" />
+          </Key>
+          <Property Name="invoice_id" Type="nvarchar" MaxLength="10" Nullable="false" />
+          <Property Name="guest_id" Type="nvarchar" MaxLength="10" />
+          <Property Name="room_id" Type="nvarchar" MaxLength="10" />
+          <Property Name="checkIn_date" Type="nvarchar" MaxLength="50" />
+          <Property Name="checkOut_date" Type="nvarchar" MaxLength="50" />
+          <Property Name="nights_stayed" Type="nvarchar" MaxLength="5" />
+          <Property Name="room_rate" Type="nvarchar" MaxLength="20" />
+          <Property Name="additional_costs" Type="nvarchar" MaxLength="20" />
+          <Property Name="pay_type" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Room">
+          <Key>
+            <PropertyRef Name="room_id" />
+          </Key>
+          <Property Name="room_id" Type="nvarchar" MaxLength="10" Nullable="false" />
+          <Property Name="room_no" Type="nchar" MaxLength="10" />
+          <Property Name="room_level" Type="nchar" MaxLength="10" />
+          <Property Name="room_type" Type="nchar" MaxLength="10" />
+          <Property Name="room_rate" Type="nchar" MaxLength="10" />
+          <Property Name="room_status" Type="nchar" MaxLength="10" />
+        </EntityType>
+        <EntityType Name="Staff">
+          <Key>
+            <PropertyRef Name="staff_id" />
+          </Key>
+          <Property Name="staff_id" Type="nvarchar" MaxLength="10" Nullable="false" />
+          <Property Name="staff_name" Type="nvarchar" MaxLength="50" />
+          <Property Name="DoB" Type="nvarchar" MaxLength="20" />
+          <Property Name="bank_acc" Type="nvarchar" MaxLength="20" />
+          <Property Name="street_add" Type="nvarchar" MaxLength="80" />
+          <Property Name="block_no" Type="nvarchar" MaxLength="20" />
+          <Property Name="postal_code" Type="nvarchar" MaxLength="20" />
+          <Property Name="country" Type="nvarchar" MaxLength="50" />
+          <Property Name="phone_no" Type="nvarchar" MaxLength="20" />
+          <Property Name="duty_id" Type="nvarchar" MaxLength="10" />
+        </EntityType>
+        <Association Name="FK_dbo_Booking_dbo_Guest_guest_id">
+          <End Role="Guest" Type="Self.Guest" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Booking" Type="Self.Booking" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Guest">
+              <PropertyRef Name="guest_id" />
+            </Principal>
+            <Dependent Role="Booking">
+              <PropertyRef Name="guest_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_Booking_dbo_Room_room_id">
+          <End Role="Room" Type="Self.Room" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Booking" Type="Self.Booking" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Room">
+              <PropertyRef Name="room_id" />
+            </Principal>
+            <Dependent Role="Booking">
+              <PropertyRef Name="room_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_Cleaning_dbo_Room_room_id">
+          <End Role="Room" Type="Self.Room" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Cleaning" Type="Self.Cleaning" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Room">
+              <PropertyRef Name="room_id" />
+            </Principal>
+            <Dependent Role="Cleaning">
+              <PropertyRef Name="room_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_Cleaning_dbo_Staff_staff_id">
+          <End Role="Staff" Type="Self.Staff" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Cleaning" Type="Self.Cleaning" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Staff">
+              <PropertyRef Name="staff_id" />
+            </Principal>
+            <Dependent Role="Cleaning">
+              <PropertyRef Name="staff_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_GuestDetail_dbo_Guest_guest_id">
+          <End Role="Guest" Type="Self.Guest" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="GuestDetail" Type="Self.GuestDetail" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Guest">
+              <PropertyRef Name="guest_id" />
+            </Principal>
+            <Dependent Role="GuestDetail">
+              <PropertyRef Name="guest_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_Payment_dbo_Guest_guest_id">
+          <End Role="Guest" Type="Self.Guest" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Payment" Type="Self.Payment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Guest">
+              <PropertyRef Name="guest_id" />
+            </Principal>
+            <Dependent Role="Payment">
+              <PropertyRef Name="guest_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_PaymentInvoice_dbo_Guest_guest_id">
+          <End Role="Guest" Type="Self.Guest" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="PaymentInvoice" Type="Self.PaymentInvoice" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Guest">
+              <PropertyRef Name="guest_id" />
+            </Principal>
+            <Dependent Role="PaymentInvoice">
+              <PropertyRef Name="guest_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_PaymentInvoice_dbo_Room_room_id">
+          <End Role="Room" Type="Self.Room" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="PaymentInvoice" Type="Self.PaymentInvoice" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Room">
+              <PropertyRef Name="room_id" />
+            </Principal>
+            <Dependent Role="PaymentInvoice">
+              <PropertyRef Name="room_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_Staff_dbo_Duty_duty_id">
+          <End Role="Duty" Type="Self.Duty" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Staff" Type="Self.Staff" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Duty">
+              <PropertyRef Name="duty_id" />
+            </Principal>
+            <Dependent Role="Staff">
+              <PropertyRef Name="duty_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="ModelStoreContainer">
+          <EntitySet Name="Booking" EntityType="Self.Booking" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Cleaning" EntityType="Self.Cleaning" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Duty" EntityType="Self.Duty" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Guest" EntityType="Self.Guest" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="GuestDetail" EntityType="Self.GuestDetail" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Payment" EntityType="Self.Payment" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PaymentInvoice" EntityType="Self.PaymentInvoice" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Room" EntityType="Self.Room" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Staff" EntityType="Self.Staff" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_dbo_Booking_dbo_Guest_guest_id" Association="Self.FK_dbo_Booking_dbo_Guest_guest_id">
+            <End Role="Guest" EntitySet="Guest" />
+            <End Role="Booking" EntitySet="Booking" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_Booking_dbo_Room_room_id" Association="Self.FK_dbo_Booking_dbo_Room_room_id">
+            <End Role="Room" EntitySet="Room" />
+            <End Role="Booking" EntitySet="Booking" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_Cleaning_dbo_Room_room_id" Association="Self.FK_dbo_Cleaning_dbo_Room_room_id">
+            <End Role="Room" EntitySet="Room" />
+            <End Role="Cleaning" EntitySet="Cleaning" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_Cleaning_dbo_Staff_staff_id" Association="Self.FK_dbo_Cleaning_dbo_Staff_staff_id">
+            <End Role="Staff" EntitySet="Staff" />
+            <End Role="Cleaning" EntitySet="Cleaning" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_GuestDetail_dbo_Guest_guest_id" Association="Self.FK_dbo_GuestDetail_dbo_Guest_guest_id">
+            <End Role="Guest" EntitySet="Guest" />
+            <End Role="GuestDetail" EntitySet="GuestDetail" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_Payment_dbo_Guest_guest_id" Association="Self.FK_dbo_Payment_dbo_Guest_guest_id">
+            <End Role="Guest" EntitySet="Guest" />
+            <End Role="Payment" EntitySet="Payment" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_PaymentInvoice_dbo_Guest_guest_id" Association="Self.FK_dbo_PaymentInvoice_dbo_Guest_guest_id">
+            <End Role="Guest" EntitySet="Guest" />
+            <End Role="PaymentInvoice" EntitySet="PaymentInvoice" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_PaymentInvoice_dbo_Room_room_id" Association="Self.FK_dbo_PaymentInvoice_dbo_Room_room_id">
+            <End Role="Room" EntitySet="Room" />
+            <End Role="PaymentInvoice" EntitySet="PaymentInvoice" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_Staff_dbo_Duty_duty_id" Association="Self.FK_dbo_Staff_dbo_Duty_duty_id">
+            <End Role="Duty" EntitySet="Duty" />
+            <End Role="Staff" EntitySet="Staff" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Booking">
+          <Key>
+            <PropertyRef Name="book_id" />
+          </Key>
+          <Property Name="book_id" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="room_id" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="people_pax" Type="String" MaxLength="25" FixedLength="false" Unicode="true" />
+          <Property Name="start_date" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="end_date" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="guest_id" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Guest" Relationship="Self.FK_dbo_Booking_dbo_Guest_guest_id" FromRole="Booking" ToRole="Guest" />
+          <NavigationProperty Name="Room" Relationship="Self.FK_dbo_Booking_dbo_Room_room_id" FromRole="Booking" ToRole="Room" />
+        </EntityType>
+        <EntityType Name="Cleaning">
+          <Key>
+            <PropertyRef Name="task_id" />
+          </Key>
+          <Property Name="task_id" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="room_id" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="task_time" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="task_date" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="staff_id" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Room" Relationship="Self.FK_dbo_Cleaning_dbo_Room_room_id" FromRole="Cleaning" ToRole="Room" />
+          <NavigationProperty Name="Staff" Relationship="Self.FK_dbo_Cleaning_dbo_Staff_staff_id" FromRole="Cleaning" ToRole="Staff" />
+        </EntityType>
+        <EntityType Name="Duty">
+          <Key>
+            <PropertyRef Name="duty_id" />
+          </Key>
+          <Property Name="duty_id" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="duty_name" Type="String" MaxLength="80" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Staffs" Relationship="Self.FK_dbo_Staff_dbo_Duty_duty_id" FromRole="Duty" ToRole="Staff" />
+        </EntityType>
+        <EntityType Name="Guest">
+          <Key>
+            <PropertyRef Name="guest_id" />
+          </Key>
+          <Property Name="guest_id" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="first_name" Type="String" MaxLength="80" FixedLength="false" Unicode="true" />
+          <Property Name="last_name" Type="String" MaxLength="80" FixedLength="false" Unicode="true" />
+          <Property Name="phone_no" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="email" Type="String" MaxLength="80" FixedLength="false" Unicode="true" />
+          <Property Name="block_no" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="postal_code" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="country" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Bookings" Relationship="Self.FK_dbo_Booking_dbo_Guest_guest_id" FromRole="Guest" ToRole="Booking" />
+          <NavigationProperty Name="GuestDetail" Relationship="Self.FK_dbo_GuestDetail_dbo_Guest_guest_id" FromRole="Guest" ToRole="GuestDetail" />
+          <NavigationProperty Name="Payments" Relationship="Self.FK_dbo_Payment_dbo_Guest_guest_id" FromRole="Guest" ToRole="Payment" />
+          <NavigationProperty Name="PaymentInvoices" Relationship="Self.FK_dbo_PaymentInvoice_dbo_Guest_guest_id" FromRole="Guest" ToRole="PaymentInvoice" />
+        </EntityType>
+        <EntityType Name="GuestDetail">
+          <Key>
+            <PropertyRef Name="guest_id" />
+          </Key>
+          <Property Name="guest_id" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="checkIn_time" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="checkIn_date" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="checkOut_time" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="checkOut_date" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="remarks" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Guest" Relationship="Self.FK_dbo_GuestDetail_dbo_Guest_guest_id" FromRole="GuestDetail" ToRole="Guest" />
+        </EntityType>
+        <EntityType Name="Payment">
+          <Key>
+            <PropertyRef Name="payment_id" />
+          </Key>
+          <Property Name="payment_id" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="guest_id" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="card_no" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="holder_name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="card_expiry" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Guest" Relationship="Self.FK_dbo_Payment_dbo_Guest_guest_id" FromRole="Payment" ToRole="Guest" />
+        </EntityType>
+        <EntityType Name="PaymentInvoice">
+          <Key>
+            <PropertyRef Name="invoice_id" />
+          </Key>
+          <Property Name="invoice_id" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="guest_id" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="room_id" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="checkIn_date" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="checkOut_date" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="nights_stayed" Type="String" MaxLength="5" FixedLength="false" Unicode="true" />
+          <Property Name="room_rate" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="additional_costs" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="pay_type" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Guest" Relationship="Self.FK_dbo_PaymentInvoice_dbo_Guest_guest_id" FromRole="PaymentInvoice" ToRole="Guest" />
+          <NavigationProperty Name="Room" Relationship="Self.FK_dbo_PaymentInvoice_dbo_Room_room_id" FromRole="PaymentInvoice" ToRole="Room" />
+        </EntityType>
+        <EntityType Name="Room">
+          <Key>
+            <PropertyRef Name="room_id" />
+          </Key>
+          <Property Name="room_id" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="room_no" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="room_level" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="room_type" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="room_rate" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="room_status" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <NavigationProperty Name="Bookings" Relationship="Self.FK_dbo_Booking_dbo_Room_room_id" FromRole="Room" ToRole="Booking" />
+          <NavigationProperty Name="Cleanings" Relationship="Self.FK_dbo_Cleaning_dbo_Room_room_id" FromRole="Room" ToRole="Cleaning" />
+          <NavigationProperty Name="PaymentInvoices" Relationship="Self.FK_dbo_PaymentInvoice_dbo_Room_room_id" FromRole="Room" ToRole="PaymentInvoice" />
+        </EntityType>
+        <EntityType Name="Staff">
+          <Key>
+            <PropertyRef Name="staff_id" />
+          </Key>
+          <Property Name="staff_id" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="staff_name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="DoB" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="bank_acc" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="street_add" Type="String" MaxLength="80" FixedLength="false" Unicode="true" />
+          <Property Name="block_no" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="postal_code" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="country" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="phone_no" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="duty_id" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Cleanings" Relationship="Self.FK_dbo_Cleaning_dbo_Staff_staff_id" FromRole="Staff" ToRole="Cleaning" />
+          <NavigationProperty Name="Duty" Relationship="Self.FK_dbo_Staff_dbo_Duty_duty_id" FromRole="Staff" ToRole="Duty" />
+        </EntityType>
+        <Association Name="FK_dbo_Booking_dbo_Guest_guest_id">
+          <End Role="Guest" Type="Self.Guest" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Booking" Type="Self.Booking" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Guest">
+              <PropertyRef Name="guest_id" />
+            </Principal>
+            <Dependent Role="Booking">
+              <PropertyRef Name="guest_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_Booking_dbo_Room_room_id">
+          <End Role="Room" Type="Self.Room" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Booking" Type="Self.Booking" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Room">
+              <PropertyRef Name="room_id" />
+            </Principal>
+            <Dependent Role="Booking">
+              <PropertyRef Name="room_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_Cleaning_dbo_Room_room_id">
+          <End Role="Room" Type="Self.Room" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Cleaning" Type="Self.Cleaning" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Room">
+              <PropertyRef Name="room_id" />
+            </Principal>
+            <Dependent Role="Cleaning">
+              <PropertyRef Name="room_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_Cleaning_dbo_Staff_staff_id">
+          <End Role="Staff" Type="Self.Staff" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Cleaning" Type="Self.Cleaning" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Staff">
+              <PropertyRef Name="staff_id" />
+            </Principal>
+            <Dependent Role="Cleaning">
+              <PropertyRef Name="staff_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_Staff_dbo_Duty_duty_id">
+          <End Role="Duty" Type="Self.Duty" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Staff" Type="Self.Staff" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Duty">
+              <PropertyRef Name="duty_id" />
+            </Principal>
+            <Dependent Role="Staff">
+              <PropertyRef Name="duty_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_GuestDetail_dbo_Guest_guest_id">
+          <End Role="Guest" Type="Self.Guest" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="GuestDetail" Type="Self.GuestDetail" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Guest">
+              <PropertyRef Name="guest_id" />
+            </Principal>
+            <Dependent Role="GuestDetail">
+              <PropertyRef Name="guest_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_Payment_dbo_Guest_guest_id">
+          <End Role="Guest" Type="Self.Guest" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Payment" Type="Self.Payment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Guest">
+              <PropertyRef Name="guest_id" />
+            </Principal>
+            <Dependent Role="Payment">
+              <PropertyRef Name="guest_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_PaymentInvoice_dbo_Guest_guest_id">
+          <End Role="Guest" Type="Self.Guest" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="PaymentInvoice" Type="Self.PaymentInvoice" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Guest">
+              <PropertyRef Name="guest_id" />
+            </Principal>
+            <Dependent Role="PaymentInvoice">
+              <PropertyRef Name="guest_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_PaymentInvoice_dbo_Room_room_id">
+          <End Role="Room" Type="Self.Room" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="PaymentInvoice" Type="Self.PaymentInvoice" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Room">
+              <PropertyRef Name="room_id" />
+            </Principal>
+            <Dependent Role="PaymentInvoice">
+              <PropertyRef Name="room_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="HMS_DatabaseEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Bookings" EntityType="Self.Booking" />
+          <EntitySet Name="Cleanings" EntityType="Self.Cleaning" />
+          <EntitySet Name="Duties" EntityType="Self.Duty" />
+          <EntitySet Name="Guests" EntityType="Self.Guest" />
+          <EntitySet Name="GuestDetails" EntityType="Self.GuestDetail" />
+          <EntitySet Name="Payments" EntityType="Self.Payment" />
+          <EntitySet Name="PaymentInvoices" EntityType="Self.PaymentInvoice" />
+          <EntitySet Name="Rooms" EntityType="Self.Room" />
+          <EntitySet Name="Staffs" EntityType="Self.Staff" />
+          <AssociationSet Name="FK_dbo_Booking_dbo_Guest_guest_id" Association="Self.FK_dbo_Booking_dbo_Guest_guest_id">
+            <End Role="Guest" EntitySet="Guests" />
+            <End Role="Booking" EntitySet="Bookings" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_Booking_dbo_Room_room_id" Association="Self.FK_dbo_Booking_dbo_Room_room_id">
+            <End Role="Room" EntitySet="Rooms" />
+            <End Role="Booking" EntitySet="Bookings" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_Cleaning_dbo_Room_room_id" Association="Self.FK_dbo_Cleaning_dbo_Room_room_id">
+            <End Role="Room" EntitySet="Rooms" />
+            <End Role="Cleaning" EntitySet="Cleanings" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_Cleaning_dbo_Staff_staff_id" Association="Self.FK_dbo_Cleaning_dbo_Staff_staff_id">
+            <End Role="Staff" EntitySet="Staffs" />
+            <End Role="Cleaning" EntitySet="Cleanings" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_Staff_dbo_Duty_duty_id" Association="Self.FK_dbo_Staff_dbo_Duty_duty_id">
+            <End Role="Duty" EntitySet="Duties" />
+            <End Role="Staff" EntitySet="Staffs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_GuestDetail_dbo_Guest_guest_id" Association="Self.FK_dbo_GuestDetail_dbo_Guest_guest_id">
+            <End Role="Guest" EntitySet="Guests" />
+            <End Role="GuestDetail" EntitySet="GuestDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_Payment_dbo_Guest_guest_id" Association="Self.FK_dbo_Payment_dbo_Guest_guest_id">
+            <End Role="Guest" EntitySet="Guests" />
+            <End Role="Payment" EntitySet="Payments" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_PaymentInvoice_dbo_Guest_guest_id" Association="Self.FK_dbo_PaymentInvoice_dbo_Guest_guest_id">
+            <End Role="Guest" EntitySet="Guests" />
+            <End Role="PaymentInvoice" EntitySet="PaymentInvoices" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_PaymentInvoice_dbo_Room_room_id" Association="Self.FK_dbo_PaymentInvoice_dbo_Room_room_id">
+            <End Role="Room" EntitySet="Rooms" />
+            <End Role="PaymentInvoice" EntitySet="PaymentInvoices" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="ModelStoreContainer" CdmEntityContainer="HMS_DatabaseEntities">
+          <EntitySetMapping Name="Bookings">
+            <EntityTypeMapping TypeName="Model.Booking">
+              <MappingFragment StoreEntitySet="Booking">
+                <ScalarProperty Name="book_id" ColumnName="book_id" />
+                <ScalarProperty Name="room_id" ColumnName="room_id" />
+                <ScalarProperty Name="people_pax" ColumnName="people_pax" />
+                <ScalarProperty Name="start_date" ColumnName="start_date" />
+                <ScalarProperty Name="end_date" ColumnName="end_date" />
+                <ScalarProperty Name="guest_id" ColumnName="guest_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Cleanings">
+            <EntityTypeMapping TypeName="Model.Cleaning">
+              <MappingFragment StoreEntitySet="Cleaning">
+                <ScalarProperty Name="task_id" ColumnName="task_id" />
+                <ScalarProperty Name="room_id" ColumnName="room_id" />
+                <ScalarProperty Name="task_time" ColumnName="task_time" />
+                <ScalarProperty Name="task_date" ColumnName="task_date" />
+                <ScalarProperty Name="staff_id" ColumnName="staff_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Duties">
+            <EntityTypeMapping TypeName="Model.Duty">
+              <MappingFragment StoreEntitySet="Duty">
+                <ScalarProperty Name="duty_id" ColumnName="duty_id" />
+                <ScalarProperty Name="duty_name" ColumnName="duty_name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Guests">
+            <EntityTypeMapping TypeName="Model.Guest">
+              <MappingFragment StoreEntitySet="Guest">
+                <ScalarProperty Name="guest_id" ColumnName="guest_id" />
+                <ScalarProperty Name="first_name" ColumnName="first_name" />
+                <ScalarProperty Name="last_name" ColumnName="last_name" />
+                <ScalarProperty Name="phone_no" ColumnName="phone_no" />
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="block_no" ColumnName="block_no" />
+                <ScalarProperty Name="postal_code" ColumnName="postal_code" />
+                <ScalarProperty Name="country" ColumnName="country" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="GuestDetails">
+            <EntityTypeMapping TypeName="Model.GuestDetail">
+              <MappingFragment StoreEntitySet="GuestDetail">
+                <ScalarProperty Name="guest_id" ColumnName="guest_id" />
+                <ScalarProperty Name="checkIn_time" ColumnName="checkIn_time" />
+                <ScalarProperty Name="checkIn_date" ColumnName="checkIn_date" />
+                <ScalarProperty Name="checkOut_time" ColumnName="checkOut_time" />
+                <ScalarProperty Name="checkOut_date" ColumnName="checkOut_date" />
+                <ScalarProperty Name="remarks" ColumnName="remarks" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Payments">
+            <EntityTypeMapping TypeName="Model.Payment">
+              <MappingFragment StoreEntitySet="Payment">
+                <ScalarProperty Name="payment_id" ColumnName="payment_id" />
+                <ScalarProperty Name="guest_id" ColumnName="guest_id" />
+                <ScalarProperty Name="card_no" ColumnName="card_no" />
+                <ScalarProperty Name="holder_name" ColumnName="holder_name" />
+                <ScalarProperty Name="card_expiry" ColumnName="card_expiry" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PaymentInvoices">
+            <EntityTypeMapping TypeName="Model.PaymentInvoice">
+              <MappingFragment StoreEntitySet="PaymentInvoice">
+                <ScalarProperty Name="invoice_id" ColumnName="invoice_id" />
+                <ScalarProperty Name="guest_id" ColumnName="guest_id" />
+                <ScalarProperty Name="room_id" ColumnName="room_id" />
+                <ScalarProperty Name="checkIn_date" ColumnName="checkIn_date" />
+                <ScalarProperty Name="checkOut_date" ColumnName="checkOut_date" />
+                <ScalarProperty Name="nights_stayed" ColumnName="nights_stayed" />
+                <ScalarProperty Name="room_rate" ColumnName="room_rate" />
+                <ScalarProperty Name="additional_costs" ColumnName="additional_costs" />
+                <ScalarProperty Name="pay_type" ColumnName="pay_type" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Rooms">
+            <EntityTypeMapping TypeName="Model.Room">
+              <MappingFragment StoreEntitySet="Room">
+                <ScalarProperty Name="room_id" ColumnName="room_id" />
+                <ScalarProperty Name="room_no" ColumnName="room_no" />
+                <ScalarProperty Name="room_level" ColumnName="room_level" />
+                <ScalarProperty Name="room_type" ColumnName="room_type" />
+                <ScalarProperty Name="room_rate" ColumnName="room_rate" />
+                <ScalarProperty Name="room_status" ColumnName="room_status" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Staffs">
+            <EntityTypeMapping TypeName="Model.Staff">
+              <MappingFragment StoreEntitySet="Staff">
+                <ScalarProperty Name="staff_id" ColumnName="staff_id" />
+                <ScalarProperty Name="staff_name" ColumnName="staff_name" />
+                <ScalarProperty Name="DoB" ColumnName="DoB" />
+                <ScalarProperty Name="bank_acc" ColumnName="bank_acc" />
+                <ScalarProperty Name="street_add" ColumnName="street_add" />
+                <ScalarProperty Name="block_no" ColumnName="block_no" />
+                <ScalarProperty Name="postal_code" ColumnName="postal_code" />
+                <ScalarProperty Name="country" ColumnName="country" />
+                <ScalarProperty Name="phone_no" ColumnName="phone_no" />
+                <ScalarProperty Name="duty_id" ColumnName="duty_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
