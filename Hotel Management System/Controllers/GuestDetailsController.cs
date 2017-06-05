@@ -10,107 +10,112 @@ using Hotel_Management_System.Models;
 
 namespace Hotel_Management_System.Controllers
 {
-    public class RoomsController : Controller
+    public class GuestDetailsController : Controller
     {
         private HMS_DatabaseEntities db = new HMS_DatabaseEntities();
 
-        // GET: Rooms
+        // GET: GuestDetails
         public ActionResult Index()
         {
-            return View(db.Rooms.ToList());
+            var guestDetails = db.GuestDetails.Include(g => g.Guest);
+            return View(guestDetails.ToList());
         }
 
-        // GET: Rooms/Details/5
+        // GET: GuestDetails/Details/5
         public ActionResult Details(string id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Room room = db.Rooms.Find(id);
-            if (room == null)
+            GuestDetail guestDetail = db.GuestDetails.Find(id);
+            if (guestDetail == null)
             {
                 return HttpNotFound();
             }
-            return View(room);
+            return View(guestDetail);
         }
 
-        // GET: Rooms/Create
+        // GET: GuestDetails/Create
         public ActionResult Create()
         {
+            ViewBag.guest_id = new SelectList(db.Guests, "guest_id", "guest_id");
             return View();
         }
 
-        // POST: Rooms/Create
+        // POST: GuestDetails/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "room_id,room_no,room_level,room_type,room_rate,room_status")] Room room)
+        public ActionResult Create([Bind(Include = "guest_id,checkIn_time,checkIn_date,checkOut_time,checkOut_date,remarks")] GuestDetail guestDetail)
         {
             if (ModelState.IsValid)
             {
-                db.Rooms.Add(room);
+                db.GuestDetails.Add(guestDetail);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            return View(room);
+            ViewBag.guest_id = new SelectList(db.Guests, "guest_id", "first_name", guestDetail.guest_id);
+            return View(guestDetail);
         }
 
-        // GET: Rooms/Edit/5
+        // GET: GuestDetails/Edit/5
         public ActionResult Edit(string id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Room room = db.Rooms.Find(id);
-            if (room == null)
+            GuestDetail guestDetail = db.GuestDetails.Find(id);
+            if (guestDetail == null)
             {
                 return HttpNotFound();
             }
-            return View(room);
+            ViewBag.guest_id = new SelectList(db.Guests, "guest_id", "first_name", guestDetail.guest_id);
+            return View(guestDetail);
         }
 
-        // POST: Rooms/Edit/5
+        // POST: GuestDetails/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "room_id,room_no,room_level,room_type,room_rate,room_status")] Room room)
+        public ActionResult Edit([Bind(Include = "guest_id,checkIn_time,checkIn_date,checkOut_time,checkOut_date,remarks")] GuestDetail guestDetail)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(room).State = EntityState.Modified;
+                db.Entry(guestDetail).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            return View(room);
+            ViewBag.guest_id = new SelectList(db.Guests, "guest_id", "first_name", guestDetail.guest_id);
+            return View(guestDetail);
         }
 
-        // GET: Rooms/Delete/5
+        // GET: GuestDetails/Delete/5
         public ActionResult Delete(string id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Room room = db.Rooms.Find(id);
-            if (room == null)
+            GuestDetail guestDetail = db.GuestDetails.Find(id);
+            if (guestDetail == null)
             {
                 return HttpNotFound();
             }
-            return View(room);
+            return View(guestDetail);
         }
 
-        // POST: Rooms/Delete/5
+        // POST: GuestDetails/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(string id)
         {
-            Room room = db.Rooms.Find(id);
-            db.Rooms.Remove(room);
+            GuestDetail guestDetail = db.GuestDetails.Find(id);
+            db.GuestDetails.Remove(guestDetail);
             db.SaveChanges();
             return RedirectToAction("Index");
         }
@@ -122,16 +127,6 @@ namespace Hotel_Management_System.Controllers
                 db.Dispose();
             }
             base.Dispose(disposing);
-        }
-
-        //Update room availablity
-        public void UpdateRoomStatus(Room r)
-        {
-            if (ModelState.IsValid)
-            {
-                db.Entry(r).State = EntityState.Modified;
-                db.SaveChanges();
-            }
         }
     }
 }

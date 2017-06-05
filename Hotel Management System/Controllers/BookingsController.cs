@@ -39,8 +39,13 @@ namespace Hotel_Management_System.Controllers
         // GET: Bookings/Create
         public ActionResult Create()
         {
-            ViewBag.guest_id = new SelectList(db.Guests, "guest_id", "first_name");
-            ViewBag.room_id = new SelectList(db.Rooms, "room_id", "room_no");
+            //Limit rooms available for booking by available ones only
+            var rooms = from p in db.Rooms
+                        where (p.room_status == "Available")
+                        select p.room_id; //Get available rooms only
+
+            ViewBag.guest_id = new SelectList(db.Guests, "guest_id", "guest_id");
+            ViewBag.room_id = new SelectList(rooms);
             return View();
         }
 
@@ -53,9 +58,16 @@ namespace Hotel_Management_System.Controllers
         {
             if (ModelState.IsValid)
             {
+                //Set room to Occupied
+                string status = "Occupied";
+                Room r = db.Rooms.Find(booking.room_id);
+                r.room_status = status;
+                RoomsController RC = new RoomsController();
+                RC.UpdateRoomStatus(r);
+
                 db.Bookings.Add(booking);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Create", "GuestDetails");
             }
 
             ViewBag.guest_id = new SelectList(db.Guests, "guest_id", "first_name", booking.guest_id);

@@ -4,54 +4,58 @@
     ViewBag.Title = "Index";
 }
 
-<h2>Index</h2>
+<h2>Hotel Bookings</h2>
 
 <p>
     @Html.ActionLink("Create New", "Create")
 </p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.people_pax)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.start_date)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.end_date)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Guest.first_name)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Room.room_no)
-        </th>
-        <th></th>
-    </tr>
-
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.people_pax)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.start_date)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.end_date)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Guest.first_name)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Room.room_no)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.book_id }) |
-            @Html.ActionLink("Details", "Details", new { id=item.book_id }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.book_id })
-        </td>
-    </tr>
-}
-
-</table>
+<div class="container">
+    <table id="cart" class="table table-hover table-condensed">
+        <thead>
+            <tr>
+                <th style="width:10%" class="text-center">Number of guests staying</th>
+                <th style="width:20%" class="text-center">Start of stay date</th>
+                <th style="width:20%" class="text-center">End of stay date</th>
+                <th style="width:20%" class="text-center">Guest's name</th>
+                <th style="width:10%" class="text-center">Room number</th>
+            </tr>
+                
+        </thead>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td class="text-center">
+                        @Html.DisplayFor(modelItem => item.people_pax)
+                    </td>
+                    <td class="text-center">
+                        @Html.DisplayFor(modelItem => item.start_date)
+                    </td>
+                    <td class="text-center">
+                        @Html.DisplayFor(modelItem => item.end_date)
+                    </td>
+                    <td class="text-center">
+                        @Html.DisplayFor(modelItem => item.Guest.first_name)
+                    </td>
+                    <td class="text-center">
+                        @Html.DisplayFor(modelItem => item.Room.room_no)
+                    </td>
+                    <td class="text-center">
+                        @Html.ActionLink("Edit", "Edit", new { id = item.book_id }) |
+                        @Html.ActionLink("Details", "Details", new { id = item.book_id }) |
+                        @Html.ActionLink("Delete", "Delete", new { id = item.book_id })
+                    </td>
+                </tr>
+            }
+      <tfoot>
+          <tr>
+              <td colspan="3" class="hidden-xs"></td>
+              <td class="text-center">
+                  <a href='@Url.Action("Index", "Guests")' class="btn btn-warning">Guests</a>
+              </td>
+              <td class="text-center">
+                  <a href='@Url.Action("Index", "Rooms")' class="btn btn-warning">Rooms</a>
+              </td>
+          </tr>
+      </tfoot>
+   </table>
+</div>

@@ -50,9 +50,11 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.room_status, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.room_status, htmlAttributes: new { @class = "col-md-2 control-label" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.room_status, new { htmlAttributes = new { @class = "form-control" } })
+                Available @Html.RadioButtonFor(model => model.room_status, "Available")
+                Occupied @Html.RadioButtonFor(model => model.room_status, "Occupied")
+                Cleaning @Html.RadioButtonFor(model => model.room_status, "Cleaning")
                 @Html.ValidationMessageFor(model => model.room_status, "", new { @class = "text-danger" })
             </div>
         </div>
